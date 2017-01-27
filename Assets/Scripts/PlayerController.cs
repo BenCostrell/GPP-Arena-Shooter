@@ -7,11 +7,11 @@ public class PlayerController : MonoBehaviour {
 	public GameObject bulletPrefab;
 	public float bulletOffsetFactor;
 	public float timeBetweenFires;
-	private float timeSinceLastFire;
+	private float timeUntilNextShot;
 
 	// Use this for initialization
 	void Start () {
-		timeSinceLastFire = 0;
+		timeUntilNextShot = 0;
 	
 	}
 	
@@ -20,11 +20,11 @@ public class PlayerController : MonoBehaviour {
 		Move ();
 		FaceTheCursor ();
 
-		if (timeSinceLastFire > timeBetweenFires) {
+		if (timeUntilNextShot <= 0) {
 			Shoot ();
-			timeSinceLastFire = 0;
+			timeUntilNextShot = timeBetweenFires;
 		} else {
-			timeSinceLastFire += Time.deltaTime;
+			timeUntilNextShot -= Time.deltaTime;
 		}
 	}
 
