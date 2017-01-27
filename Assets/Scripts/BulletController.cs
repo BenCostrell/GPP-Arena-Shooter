@@ -8,7 +8,8 @@ public class BulletController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Vector3 rotationVector = new Vector2 (Mathf.Tan (Mathf.Deg2Rad * transform.eulerAngles.z), 1);
+		float angleInDegrees = Mathf.Deg2Rad * (transform.eulerAngles.z + 90);
+		Vector3 rotationVector = new Vector2 (Mathf.Cos (angleInDegrees), Mathf.Sin(angleInDegrees));
 		Debug.Log (rotationVector);
 		GetComponent<Rigidbody2D> ().velocity = speed * rotationVector.normalized;
 		Destroy (gameObject, lifetime);

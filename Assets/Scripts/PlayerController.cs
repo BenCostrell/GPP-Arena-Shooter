@@ -54,7 +54,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Shoot(){
-		Vector3 rotationVector = new Vector3 (Mathf.Tan (Mathf.Deg2Rad * transform.eulerAngles.z), 1, 0);
+		float angleInDegrees = Mathf.Deg2Rad * (transform.eulerAngles.z + 90);
+		Vector3 rotationVector = new Vector2 (Mathf.Cos (angleInDegrees), Mathf.Sin(angleInDegrees));
 
 		Instantiate (bulletPrefab, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
 	}
