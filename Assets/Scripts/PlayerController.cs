@@ -12,10 +12,10 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		ProcessInput ();
+		Move ();
 	}
 
-	void ProcessInput(){
+	void Move(){
 		Vector2 forceToAdd = Vector2.zero;
 		if (Input.GetAxis("Horizontal") > 0){
 			forceToAdd += Vector2.right;
@@ -31,5 +31,11 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		GetComponent<Rigidbody2D> ().AddForce (forceFactor * forceToAdd);
+
+		Vector3 distanceToMouse = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
+		float angleBetweenShipAndMouse = Mathf.Rad2Deg * Mathf.Atan2 (distanceToMouse.y, distanceToMouse.x);
+		Debug.Log (angleBetweenShipAndMouse);
+
+		transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angleBetweenShipAndMouse - 90);
 	}
 }
