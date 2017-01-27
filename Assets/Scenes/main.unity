@@ -184,6 +184,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceFactor: 10
+  bulletPrefab: {fileID: 1000012114980924, guid: ea5599c0989a00d49ab6cf70fcb9b152,
+    type: 2}
+  bulletOffsetFactor: 2
+  timeBetweenFires: 0.2
 --- !u!61 &1732427500
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -193,7 +197,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0.013293743, y: 0.013293266}
   serializedVersion: 2
