@@ -183,7 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141f5f62955c0d74a8b8c1e3c5833952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceFactor: 25
+  moveForce: 30
+  maxSpeed: 20
   bulletPrefab: {fileID: 1000012114980924, guid: ea5599c0989a00d49ab6cf70fcb9b152,
     type: 2}
   bulletOffsetFactor: 2

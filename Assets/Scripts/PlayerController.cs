@@ -3,15 +3,19 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	public float forceFactor;
+	public float moveForce;
+	public float maxSpeed;
 	public GameObject bulletPrefab;
 	public float bulletOffsetFactor;
 	public float timeBetweenFires;
 	private float timeUntilNextShot;
 
+	private Rigidbody2D rb;
+
 	// Use this for initialization
 	void Start () {
 		timeUntilNextShot = 0;
+		rb = GetComponent<Rigidbody2D> ();
 	
 	}
 	
@@ -29,21 +33,15 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Move(){
-		Vector2 forceToAdd = Vector2.zero;
-		if (Input.GetAxis("Horizontal") > 0){
-			forceToAdd += Vector2.right;
+		Vector2 direction = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
+
+		direction = direction.normalized;
+
+		if (Vector2.Dot(rb.velocity, direction) < maxSpeed) {
+			rb.AddForce (moveForce * direction);
+		} else {
+			rb.velocity = maxSpeed * direction;
 		}
-		if (Input.GetAxis ("Horizontal") < 0){
-			forceToAdd += Vector2.left;
-		}
-		if (Input.GetAxis("Vertical") > 0){
-			forceToAdd += Vector2.up;
-		}
-		if (Input.GetAxis ("Vertical") < 0){
-			forceToAdd += Vector2.down;
-		}
-			
-		GetComponent<Rigidbody2D> ().AddForce (forceFactor * forceToAdd.normalized);
 	}
 
 	void FaceTheCursor(){
