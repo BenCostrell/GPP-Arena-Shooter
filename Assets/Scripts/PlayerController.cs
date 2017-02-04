@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
-	public float moveForce;
-	public float maxSpeed;
+	public float speed;
 	public GameObject bulletPrefab;
 	public float bulletOffsetFactor;
 	public float timeBetweenFires;
@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetButtonDown("Reset")){
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
+
 		Move ();
 		FaceTheCursor ();
 
@@ -37,11 +41,7 @@ public class PlayerController : MonoBehaviour {
 
 		direction = direction.normalized;
 
-		if (Vector2.Dot(rb.velocity, direction) < maxSpeed) {
-			rb.AddForce (moveForce * direction);
-		} else {
-			rb.velocity = maxSpeed * direction;
-		}
+		rb.velocity = speed * direction;
 	}
 
 	void FaceTheCursor(){
@@ -53,8 +53,10 @@ public class PlayerController : MonoBehaviour {
 
 	void Shoot(){
 		float angleInDegrees = Mathf.Deg2Rad * (transform.eulerAngles.z + 90);
-		Vector3 rotationVector = new Vector2 (Mathf.Cos (angleInDegrees), Mathf.Sin(angleInDegrees));
+		Vector3 rotationVector = new Vector3 (Mathf.Cos (angleInDegrees), Mathf.Sin(angleInDegrees));
 
 		Instantiate (bulletPrefab, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
 	}
+
+
 }

@@ -90,6 +90,51 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &642828480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 642828482}
+  - 114: {fileID: 642828481}
+  m_Layer: 0
+  m_Name: EnemyGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &642828481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 642828480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea315b887e459e499681be7e640fa29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1000011172848850, guid: c4dbddc7906ac144cb98522274b4f3fe,
+    type: 2}
+  boldEnemyApproachSpeed: 3
+  boldEnemySprite: {fileID: 21300000, guid: 790c600591762cd48af843197fd23298, type: 3}
+  timeBetweenWaves: 2
+--- !u!4 &642828482
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 642828480}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
 --- !u!1 &1732427495
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,11 +145,11 @@ GameObject:
   - 4: {fileID: 1732427497}
   - 212: {fileID: 1732427496}
   - 50: {fileID: 1732427498}
-  - 61: {fileID: 1732427500}
   - 114: {fileID: 1732427499}
+  - 61: {fileID: 1732427500}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,8 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141f5f62955c0d74a8b8c1e3c5833952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 30
-  maxSpeed: 20
+  speed: 10
   bulletPrefab: {fileID: 1000012114980924, guid: ea5599c0989a00d49ab6cf70fcb9b152,
     type: 2}
   bulletOffsetFactor: 2
@@ -198,11 +242,11 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0.013293743, y: 0.013293266}
+  m_Offset: {x: 0.026604176, y: 0.026604176}
   serializedVersion: 2
-  m_Size: {x: 1.4846201, y: 2.9734135}
+  m_Size: {x: 1.4569623, y: 2.9467916}
 --- !u!1 &2052172392
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,4 +19,12 @@ public class BulletController : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
+
+	void OnTriggerEnter2D(Collider2D collider){
+		GameObject collidedObject = collider.gameObject;
+		if (collidedObject.tag == "Enemy") {
+			Destroy (gameObject);
+			collidedObject.GetComponent<Enemy> ().Die ();
+		}
+	}
 }
