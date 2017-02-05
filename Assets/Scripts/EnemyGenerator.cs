@@ -6,29 +6,39 @@ public class EnemyGenerator : MonoBehaviour {
 	public GameObject enemyPrefab;
 	public float boldEnemyApproachSpeed;
 	public Sprite boldEnemySprite;
+	public Sprite shyEnemySprite;
 	private float timeUntilNextWave;
 	public float timeBetweenWaves;
+	private GameManager gameManager;
+	public enum EnemyType {Bold, Shy};
 
 	// Use this for initialization
 	void Start () {
 		timeUntilNextWave = 0;
+		gameManager = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (timeUntilNextWave > 0) {
-			timeUntilNextWave -= Time.deltaTime;
-		} else {
-			GenerateWave (5);
-			timeUntilNextWave = timeBetweenWaves;
+		if (!gameManager.gameOver) {
+			if (timeUntilNextWave > 0) {
+				timeUntilNextWave -= Time.deltaTime;
+			} else {
+				GenerateWave (5);
+				timeUntilNextWave = timeBetweenWaves;
+			}
 		}
-	}
+	}		
 
-	void GenerateBoldEnemy(Vector3 location){
+	void GenerateEnemy(Vector3 location, EnemyType type){
 		GameObject newEnemy = Instantiate (enemyPrefab, location, Quaternion.identity) as GameObject;
-		BoldEnemy boldEnemy = newEnemy.AddComponent<BoldEnemy> ();
-		newEnemy.GetComponent<SpriteRenderer> ().sprite = boldEnemySprite;
-		boldEnemy.approachSpeed = boldEnemyApproachSpeed;
+		if (type == EnemyType.Bold) {
+			BoldEnemy boldEnemy = newEnemy.AddComponent<BoldEnemy> ();
+			newEnemy.GetComponent<SpriteRenderer> ().sprite = boldEnemySprite;
+		} else if (type == EnemyType.Shy) {
+			ShyEnemy shyEnemy = newEnemy.AddComponent<ShyEnemy> ();
+			newEnemy.GetComponent<SpriteRenderer> ().sprite = shyEnemySprite;
+		}
 	}
 
 	void GenerateWave(int numEnemies){
@@ -49,7 +59,16 @@ public class EnemyGenerator : MonoBehaviour {
 				xCoord = -16;
 				yCoord = -10 + pointOnUnfoldedRectangle - 84;
 			}
-			GenerateBoldEnemy (new Vector3 (xCoord, yCoord, 0));
+
+			EnemyType type;
+			int typeNum = Random.Range (0, 2);
+			if (typeNum == 0) {
+				type = EnemyType.Bold;
+			} else {
+				type = EnemyType.Shy;
+			}
+
+			GenerateEnemy (new Vector3 (xCoord, yCoord, 0), type);
 		}
 	}
 }

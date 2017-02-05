@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class BoldEnemy : Enemy {
-	public BoldEnemy(float approachSpd){
-		approachSpeed = approachSpd;
 
+	protected override void InitializeSpeed(){
+		approachSpeed = 3f;
 	}
 
 	protected override void Move(){

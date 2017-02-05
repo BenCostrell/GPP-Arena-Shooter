@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 	public float bulletOffsetFactor;
 	public float timeBetweenFires;
 	private float timeUntilNextShot;
+	public GameManager gameManager;
 
 	private Rigidbody2D rb;
 
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		timeUntilNextShot = 0;
 		rb = GetComponent<Rigidbody2D> ();
-	
+		gameManager = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ();
 	}
 	
 	// Update is called once per frame
@@ -58,5 +59,15 @@ public class PlayerController : MonoBehaviour {
 		Instantiate (bulletPrefab, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
 	}
 
+	void OnTriggerEnter2D(Collider2D collider){
+		GameObject collidedObject = collider.gameObject;
+		if (collidedObject.tag == "Enemy") {
+			Die ();
+		}
+	}
 
+	void Die(){
+		Destroy (gameObject);
+		gameManager.EndGame ();
+	}
 }
