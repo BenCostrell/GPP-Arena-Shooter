@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
 	public float timeBetweenFires;
 	private float timeUntilNextShot;
 	public GameManager gameManager;
+	private AudioSource laserSound;
+	private AudioSource deathSound;
 
 	private Rigidbody2D rb;
 
@@ -17,18 +19,23 @@ public class PlayerController : MonoBehaviour {
 		timeUntilNextShot = 0;
 		rb = GetComponent<Rigidbody2D> ();
 		gameManager = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ();
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		laserSound = audioSources [0];
+		deathSound = audioSources [1];
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Move ();
-		FaceTheCursor ();
+		if (!gameManager.gameOver) {
+			Move ();
+			FaceTheCursor ();
 
-		if (timeUntilNextShot <= 0) {
-			Shoot ();
-			timeUntilNextShot = timeBetweenFires;
-		} else {
-			timeUntilNextShot -= Time.deltaTime;
+			if (timeUntilNextShot <= 0) {
+				Shoot ();
+				timeUntilNextShot = timeBetweenFires;
+			} else {
+				timeUntilNextShot -= Time.deltaTime;
+			}
 		}
 	}
 
@@ -52,6 +59,8 @@ public class PlayerController : MonoBehaviour {
 		Vector3 rotationVector = new Vector3 (Mathf.Cos (angleInRadians), Mathf.Sin(angleInRadians));
 
 		Instantiate (bulletPrefab, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
+
+		laserSound.Play ();
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
@@ -62,7 +71,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Die(){
-		Destroy (gameObject);
+		GetComponent<SpriteRenderer> ().enabled = false;
+		GetComponent<BoxCollider2D> ().enabled = false;
+		deathSound.Play ();
+		float audioLength = deathSound.clip.length;
+		Destroy (gameObject, audioLength);
 		gameManager.EndGame ();
 	}
 }
