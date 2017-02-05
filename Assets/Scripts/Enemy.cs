@@ -2,13 +2,16 @@
 using System.Collections;
 
 public class Enemy : MonoBehaviour {
-	protected GameObject player;
-	protected PlayerController playerCont;
-	protected GameManager gameManager;
+	private GameObject player;
+	private PlayerController playerCont;
+	private GameManager gameManager;
 	public float approachSpeed;
 	public float avoidSpeed;
+	public float zagSpeed;
 	public float coneFactor;
 	private Rigidbody2D rb;
+	protected float zagTime;
+	protected float timeUntilZag;
 
 
 	// Use this for initialization
@@ -40,6 +43,14 @@ public class Enemy : MonoBehaviour {
 		rb.MovePosition (Vector3.MoveTowards (transform.position, player.transform.position, -avoidSpeed * Time.deltaTime));
 	}
 
+	protected void Zag(){
+		Vector3 vectorFromMeToPlayer = (player.transform.position - transform.position);
+		float angle = Mathf.Rad2Deg * Mathf.Atan2 (vectorFromMeToPlayer.y, vectorFromMeToPlayer.x);
+		float zagAngle = Mathf.Deg2Rad * (angle + 30);
+		Vector3 zagVector = new Vector3 (Mathf.Cos (zagAngle), Mathf.Sin (zagAngle));
+		rb.velocity = zagVector * zagSpeed;
+	}
+
 	protected bool IsPlayerFacingMe(){
 		float angleInDegrees = Mathf.Deg2Rad * (player.transform.eulerAngles.z + 90);
 		Vector3 playerRotationVector = new Vector3 (Mathf.Cos (angleInDegrees), Mathf.Sin (angleInDegrees)).normalized;
@@ -51,5 +62,8 @@ public class Enemy : MonoBehaviour {
 
 	public void Die(){
 		Destroy (gameObject);
+		if (!gameManager.gameOver) {
+			gameManager.Score (10);
+		}
 	}
 }

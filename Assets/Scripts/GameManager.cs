@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour {
 
 	public GameObject gameOverMessage;
 	public bool gameOver;
+	public int score;
+	public GameObject scoreText;
 
 	// Use this for initialization
 	void Start () {
@@ -24,5 +27,10 @@ public class GameManager : MonoBehaviour {
 	public void EndGame(){
 		gameOverMessage.SetActive (true);
 		gameOver = true;
+	}
+
+	public void Score(int points){
+		score += points;
+		scoreText.GetComponent<Text> ().text = score.ToString ();
 	}
 }
