@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour {
 		playerCont = player.GetComponent<PlayerController> ();
 		rb = GetComponent<Rigidbody2D> ();
 		gameManager = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ();
-		InitializeSpeed ();
+		Initialize ();
 	}
 	
 	// Update is called once per frame
@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	protected virtual void InitializeSpeed() {}
+	protected virtual void Initialize() {}
 
 	protected virtual void Move() {}
 
@@ -60,10 +60,18 @@ public class Enemy : MonoBehaviour {
 		return isFacing;
 	}
 
+	protected void SetDeathClip(AudioClip deathClip){
+		GetComponent<AudioSource> ().clip = deathClip;
+	}
+
 	public void Die(){
-		Destroy (gameObject);
+		GetComponent<SpriteRenderer> ().enabled = false;
+		GetComponent<CircleCollider2D> ().enabled = false;
+		GetComponent<AudioSource> ().Play ();
+		float audioLength = GetComponent<AudioSource> ().clip.length;
 		if (!gameManager.gameOver) {
 			gameManager.Score (10);
 		}
+		Destroy (gameObject, audioLength);
 	}
 }

@@ -3,11 +3,14 @@ using System.Collections;
 
 public class ZigZagEnemy : Enemy {
 
-	protected override void InitializeSpeed(){
+	protected override void Initialize(){
 		approachSpeed = 5f;
 		zagSpeed = 8f;
 		zagTime = 0.5f;
 		timeUntilZag = 0;
+
+		AudioClip deathClip = Resources.Load ("Sounds/sfx_deathscream_android2") as AudioClip;
+		SetDeathClip (deathClip);
 	}
 
 	protected override void Move(){
