@@ -1,38 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class EnemyGenerator : MonoBehaviour {
+public class EnemyManager : MonoBehaviour {
 
 	public GameObject enemyPrefab;
-	public float boldEnemyApproachSpeed;
 	public Sprite boldEnemySprite;
 	public Sprite shyEnemySprite;
 	public Sprite zigZagEnemySprite;
-	private float timeUntilNextWave;
-	public float timeBetweenWaves;
 	public int initialNumEnemiesPerWave;
 	public int wavesBeforeIncrease;
 	private int waveCount;
 	private int enemiesToSpawn;
+	private List<Enemy> enemyList;
 	private GameManager gameManager;
 	public enum EnemyType {Bold, Shy, ZigZag};
 
 	// Use this for initialization
 	void Start () {
-		timeUntilNextWave = 0;
 		gameManager = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ();
 		enemiesToSpawn = initialNumEnemiesPerWave;
 		waveCount = 1;
+		enemyList = new List<Enemy> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (!gameManager.gameOver) {
-			if (timeUntilNextWave > 0) {
-				timeUntilNextWave -= Time.deltaTime;
-			} else {
+			if (enemyList.Count == 0) {
 				GenerateWave (enemiesToSpawn);
-				timeUntilNextWave = timeBetweenWaves;
 				waveCount += 1;
 				if (waveCount % wavesBeforeIncrease == 0) {
 					enemiesToSpawn += 1;
@@ -54,6 +50,7 @@ public class EnemyGenerator : MonoBehaviour {
 			ZigZagEnemy zigZagEnemy = newEnemy.AddComponent<ZigZagEnemy> ();
 			sr.sprite = zigZagEnemySprite;
 		}
+		enemyList.Add (newEnemy.GetComponent<Enemy> ());
 	}
 
 	void GenerateWave(int numEnemies){
@@ -87,5 +84,10 @@ public class EnemyGenerator : MonoBehaviour {
 
 			GenerateEnemy (new Vector3 (xCoord, yCoord, 0), type);
 		}
+	}
+
+	public void DestroyEnemy(Enemy enemy, float timeToDestroy){
+		Destroy (enemy.gameObject, timeToDestroy);
+		enemyList.Remove (enemy);
 	}
 }

@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour {
 	private Rigidbody2D rb;
 	protected float zagTime;
 	protected float timeUntilZag;
+	protected EnemyManager enemyManager;
+	public int id;
 
 
 	// Use this for initialization
@@ -21,6 +23,7 @@ public class Enemy : MonoBehaviour {
 		playerCont = player.GetComponent<PlayerController> ();
 		rb = GetComponent<Rigidbody2D> ();
 		gameManager = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ();
+		enemyManager = GameObject.FindWithTag ("EnemyManager").GetComponent<EnemyManager> ();
 		Initialize ();
 	}
 	
@@ -72,6 +75,6 @@ public class Enemy : MonoBehaviour {
 		if (!gameManager.gameOver) {
 			gameManager.Score (10);
 		}
-		Destroy (gameObject, audioLength);
+		enemyManager.DestroyEnemy (this, audioLength);
 	}
 }
