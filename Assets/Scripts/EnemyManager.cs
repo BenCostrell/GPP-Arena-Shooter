@@ -5,16 +5,14 @@ using System.Collections.Generic;
 public class EnemyManager : MonoBehaviour {
 
 	public GameObject enemyPrefab;
-	public Sprite boldEnemySprite;
-	public Sprite shyEnemySprite;
-	public Sprite zigZagEnemySprite;
 	public int initialNumEnemiesPerWave;
 	public int wavesBeforeIncrease;
 	private int waveCount;
 	private int enemiesToSpawn;
 	private List<Enemy> enemyList;
-	private GameManager gameManager;
-	public enum EnemyType {Bold, Shy, ZigZag};
+	public GameManager gameManager;
+	public enum EnemyType {Bold, Shy, ZigZag, Vengeful};
+	private List<EnemyType> enemyTypes;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +20,7 @@ public class EnemyManager : MonoBehaviour {
 		enemiesToSpawn = initialNumEnemiesPerWave;
 		waveCount = 1;
 		enemyList = new List<Enemy> ();
+		enemyTypes = new List<EnemyType> (){ EnemyType.Bold, EnemyType.Shy, EnemyType.ZigZag, EnemyType.Vengeful };
 	}
 
 	// Update is called once per frame
@@ -39,16 +38,14 @@ public class EnemyManager : MonoBehaviour {
 
 	void GenerateEnemy(Vector3 location, EnemyType type){
 		GameObject newEnemy = Instantiate (enemyPrefab, location, Quaternion.identity) as GameObject;
-		SpriteRenderer sr = newEnemy.GetComponent<SpriteRenderer> ();
 		if (type == EnemyType.Bold) {
-			BoldEnemy boldEnemy = newEnemy.AddComponent<BoldEnemy> ();
-			sr.sprite = boldEnemySprite;
+			newEnemy.AddComponent<BoldEnemy> ();
 		} else if (type == EnemyType.Shy) {
-			ShyEnemy shyEnemy = newEnemy.AddComponent<ShyEnemy> ();
-			sr.sprite = shyEnemySprite;
+			newEnemy.AddComponent<ShyEnemy> ();
 		} else if (type == EnemyType.ZigZag) {
-			ZigZagEnemy zigZagEnemy = newEnemy.AddComponent<ZigZagEnemy> ();
-			sr.sprite = zigZagEnemySprite;
+			newEnemy.AddComponent<ZigZagEnemy> ();
+		} else if (type == EnemyType.Vengeful){
+			newEnemy.AddComponent<VengefulEnemy>();
 		}
 		enemyList.Add (newEnemy.GetComponent<Enemy> ());
 	}
@@ -72,15 +69,9 @@ public class EnemyManager : MonoBehaviour {
 				yCoord = -10 + pointOnUnfoldedRectangle - 84;
 			}
 
-			EnemyType type;
-			int typeNum = Random.Range (0, 3);
-			if (typeNum == 0) {
-				type = EnemyType.Bold;
-			} else if (typeNum == 1) {
-				type = EnemyType.Shy;
-			} else {
-				type = EnemyType.ZigZag;
-			}
+
+			int typeNum = Random.Range (0, enemyTypes.Count);
+			EnemyType type = enemyTypes [typeNum];
 
 			GenerateEnemy (new Vector3 (xCoord, yCoord, 0), type);
 		}
@@ -88,6 +79,7 @@ public class EnemyManager : MonoBehaviour {
 
 	public void DestroyEnemy(Enemy enemy, float timeToDestroy){
 		Destroy (enemy.gameObject, timeToDestroy);
+		gameManager.eventManager.Fire (new EnemyDied());
 		enemyList.Remove (enemy);
 	}
 }

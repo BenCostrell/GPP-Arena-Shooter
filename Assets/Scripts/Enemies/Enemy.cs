@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour {
 		GetComponent<AudioSource> ().clip = deathClip;
 	}
 
-	public void Die(){
+	public virtual void Die(){
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<CircleCollider2D> ().enabled = false;
 		GetComponent<AudioSource> ().Play ();

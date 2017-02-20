@@ -9,6 +9,7 @@ public class ZigZagEnemy : Enemy {
 		zagTime = 0.5f;
 		timeUntilZag = 0;
 
+		GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Art/zigZagEnemy");
 		AudioClip deathClip = Resources.Load ("Sounds/sfx_deathscream_android2") as AudioClip;
 		SetDeathClip (deathClip);
 	}

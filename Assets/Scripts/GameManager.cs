@@ -10,11 +10,13 @@ public class GameManager : MonoBehaviour {
 	public bool gameOver;
 	public int score;
 	public GameObject scoreText;
+	public EventManager eventManager;
 
 	// Use this for initialization
 	void Start () {
 		gameOverMessage.SetActive (false);
 		gameOver = false;
+		eventManager = EventManager.Instance;
 	}
 	
 	// Update is called once per frame
