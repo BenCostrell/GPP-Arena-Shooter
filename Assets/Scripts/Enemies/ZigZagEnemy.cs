@@ -4,8 +4,8 @@ using System.Collections;
 public class ZigZagEnemy : Enemy {
 
 	protected override void Initialize(){
-		approachSpeed = 5f;
-		zagSpeed = 8f;
+		approachSpeed = 8f;
+		zagSpeed = 12f;
 		zagTime = 0.5f;
 		timeUntilZag = 0;
 

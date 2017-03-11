@@ -8,16 +8,18 @@ public class EnemyManager : MonoBehaviour {
 	public int wavesBeforeIncrease;
 	private int waveCount;
 	private int enemiesToSpawn;
+	public float spawnRectWidth;
+	public float spawnRectHeight;
 	private List<Enemy> enemyList;
-	public enum EnemyType {Bold, Shy, ZigZag, Vengeful};
-	private List<EnemyType> enemyTypes;
+	public enum EnemyType {Bold, Shy, ZigZag, Vengeful, Boss};
+	private List<EnemyType> spawnableEnemyTypes;
 
 	// Use this for initialization
 	void Start () {
 		enemiesToSpawn = initialNumEnemiesPerWave;
 		waveCount = 1;
 		enemyList = new List<Enemy> ();
-		enemyTypes = new List<EnemyType> (){ EnemyType.Bold, EnemyType.Shy, EnemyType.ZigZag, EnemyType.Vengeful };
+		spawnableEnemyTypes = new List<EnemyType> (){ EnemyType.Bold, EnemyType.Shy, EnemyType.ZigZag, EnemyType.Vengeful };
 	}
 
 	// Update is called once per frame
@@ -51,24 +53,24 @@ public class EnemyManager : MonoBehaviour {
 		for (int i = 0; i < numEnemies; i++) {
 			float xCoord;
 			float yCoord;
-			float pointOnUnfoldedRectangle = Random.Range (0, 104);
-			if (pointOnUnfoldedRectangle < 32) {
-				xCoord = -16 + pointOnUnfoldedRectangle;
-				yCoord = 10;
-			} else if (pointOnUnfoldedRectangle < 52) {
-				xCoord = 16;
-				yCoord = -10 + pointOnUnfoldedRectangle - 32;
-			} else if (pointOnUnfoldedRectangle < 84) {
-				xCoord = -16 + pointOnUnfoldedRectangle - 52;
-				yCoord = -10;
+			float pointOnUnfoldedRectangle = Random.Range (0, 2 * (spawnRectWidth + spawnRectHeight));
+			if (pointOnUnfoldedRectangle < spawnRectWidth) {
+				xCoord = -spawnRectWidth/2 + pointOnUnfoldedRectangle;
+				yCoord = spawnRectHeight/2;
+			} else if (pointOnUnfoldedRectangle < spawnRectWidth + spawnRectHeight) {
+				xCoord = spawnRectWidth/2;
+				yCoord = -spawnRectHeight/2 + pointOnUnfoldedRectangle - spawnRectWidth;
+			} else if (pointOnUnfoldedRectangle < ((2 * spawnRectWidth) + spawnRectHeight)) {
+				xCoord = -spawnRectWidth/2 + pointOnUnfoldedRectangle - (spawnRectWidth +spawnRectHeight);
+				yCoord = -spawnRectHeight/2;
 			} else {
-				xCoord = -16;
-				yCoord = -10 + pointOnUnfoldedRectangle - 84;
+				xCoord = -spawnRectWidth/2;
+				yCoord = -spawnRectHeight / 2 + pointOnUnfoldedRectangle - ((2 * spawnRectWidth) + spawnRectHeight);
 			}
 
 
-			int typeNum = Random.Range (0, enemyTypes.Count);
-			EnemyType type = enemyTypes [typeNum];
+			int typeNum = Random.Range (0, spawnableEnemyTypes.Count);
+			EnemyType type = spawnableEnemyTypes [typeNum];
 
 			GenerateEnemy (new Vector3 (xCoord, yCoord, 0), type);
 		}

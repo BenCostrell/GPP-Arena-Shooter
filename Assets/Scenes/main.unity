@@ -357,6 +357,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialNumEnemiesPerWave: 2
   wavesBeforeIncrease: 5
+  spawnRectWidth: 44
+  spawnRectHeight: 24
 --- !u!4 &642828482
 Transform:
   m_ObjectHideFlags: 0
@@ -629,7 +631,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

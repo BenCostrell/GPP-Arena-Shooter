@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		coneFactor = 0.5f;
 		rb = GetComponent<Rigidbody2D> ();
-		startingHealth = 1;
+		startingHealth = 2;
 		Initialize ();
 	}
 	
