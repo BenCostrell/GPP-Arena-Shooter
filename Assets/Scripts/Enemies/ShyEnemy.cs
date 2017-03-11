@@ -10,6 +10,7 @@ public class ShyEnemy : Enemy {
 		GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Art/shyEnemy");
 		AudioClip deathClip = Resources.Load ("Sounds/sfx_deathscream_android8") as AudioClip;
 		SetDeathClip (deathClip);
+		base.Initialize ();
 	}
 
 	protected override void Move(){

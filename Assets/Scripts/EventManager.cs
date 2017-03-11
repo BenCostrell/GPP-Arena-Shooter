@@ -7,16 +7,6 @@ public abstract class Event {}
 public class EnemyDied : Event {}
 
 public class EventManager {
-	private static EventManager instance;
-
-	public static EventManager Instance {
-		get {
-			if (instance == null) {
-				instance = new EventManager ();
-			}
-			return instance;
-		}
-	}
 
 	public delegate void EventDelegate<T>(T e) where T: Event;
 	private delegate void EventDelegate(Event e);

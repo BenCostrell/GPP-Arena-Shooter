@@ -12,6 +12,7 @@ public class ZigZagEnemy : Enemy {
 		GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Art/zigZagEnemy");
 		AudioClip deathClip = Resources.Load ("Sounds/sfx_deathscream_android2") as AudioClip;
 		SetDeathClip (deathClip);
+		base.Initialize ();
 	}
 
 	protected override void Move(){

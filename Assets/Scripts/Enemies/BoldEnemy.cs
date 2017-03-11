@@ -8,6 +8,7 @@ public class BoldEnemy : Enemy {
 		GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Art/boldEnemy");
 		AudioClip deathClip = Resources.Load ("Sounds/sfx_deathscream_robot1") as AudioClip;
 		SetDeathClip (deathClip);
+		base.Initialize ();
 	}
 
 	protected override void Move(){

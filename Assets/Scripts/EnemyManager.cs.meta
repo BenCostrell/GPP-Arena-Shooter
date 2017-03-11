@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: e56c09b70f9d56e45806c856a3646445
-timeCreated: 1486917506
+timeCreated: 1489195534
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - enemyPrefab: {fileID: 1000011172848850, guid: c4dbddc7906ac144cb98522274b4f3fe,
+      type: 2}
+  - gameManager: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

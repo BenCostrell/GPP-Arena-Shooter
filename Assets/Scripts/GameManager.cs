@@ -10,13 +10,18 @@ public class GameManager : MonoBehaviour {
 	public bool gameOver;
 	public int score;
 	public GameObject scoreText;
-	public EventManager eventManager;
+	public GameObject player;
 
 	// Use this for initialization
 	void Start () {
 		gameOverMessage.SetActive (false);
 		gameOver = false;
-		eventManager = EventManager.Instance;
+		Services.EventManager = new EventManager ();
+		Services.EnemyManager = GameObject.FindGameObjectWithTag ("EnemyManager").GetComponent<EnemyManager> ();
+		Services.GameManager = this;
+		Services.PrefabDB = GameObject.FindGameObjectWithTag ("PrefabDB").GetComponent<PrefabDB> ();
+
+		InitializePlayer ();
 	}
 	
 	// Update is called once per frame
@@ -34,5 +39,9 @@ public class GameManager : MonoBehaviour {
 	public void Score(int points){
 		score += points;
 		scoreText.GetComponent<Text> ().text = score.ToString ();
+	}
+
+	private void InitializePlayer(){
+		player = Instantiate (Services.PrefabDB.player, Vector3.zero, Quaternion.identity) as GameObject;
 	}
 }

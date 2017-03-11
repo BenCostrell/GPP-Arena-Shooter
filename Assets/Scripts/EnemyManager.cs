@@ -4,19 +4,16 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour {
 
-	public GameObject enemyPrefab;
 	public int initialNumEnemiesPerWave;
 	public int wavesBeforeIncrease;
 	private int waveCount;
 	private int enemiesToSpawn;
 	private List<Enemy> enemyList;
-	public GameManager gameManager;
 	public enum EnemyType {Bold, Shy, ZigZag, Vengeful};
 	private List<EnemyType> enemyTypes;
 
 	// Use this for initialization
 	void Start () {
-		gameManager = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ();
 		enemiesToSpawn = initialNumEnemiesPerWave;
 		waveCount = 1;
 		enemyList = new List<Enemy> ();
@@ -25,7 +22,7 @@ public class EnemyManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (!gameManager.gameOver) {
+		if (!Services.GameManager.gameOver) {
 			if (enemyList.Count == 0) {
 				GenerateWave (enemiesToSpawn);
 				waveCount += 1;
@@ -37,7 +34,7 @@ public class EnemyManager : MonoBehaviour {
 	}		
 
 	void GenerateEnemy(Vector3 location, EnemyType type){
-		GameObject newEnemy = Instantiate (enemyPrefab, location, Quaternion.identity) as GameObject;
+		GameObject newEnemy = Instantiate (Services.PrefabDB.enemy, location, Quaternion.identity) as GameObject;
 		if (type == EnemyType.Bold) {
 			newEnemy.AddComponent<BoldEnemy> ();
 		} else if (type == EnemyType.Shy) {
@@ -79,7 +76,11 @@ public class EnemyManager : MonoBehaviour {
 
 	public void DestroyEnemy(Enemy enemy, float timeToDestroy){
 		Destroy (enemy.gameObject, timeToDestroy);
-		gameManager.eventManager.Fire (new EnemyDied());
+		Services.EventManager.Fire (new EnemyDied());
 		enemyList.Remove (enemy);
+	}
+
+	private void StartBossSequence(){
+		
 	}
 }

@@ -4,11 +4,9 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public float speed;
-	public GameObject bulletPrefab;
 	public float bulletOffsetFactor;
 	public float timeBetweenFires;
 	private float timeUntilNextShot;
-	public GameManager gameManager;
 	private AudioSource laserSound;
 	private AudioSource deathSound;
 
@@ -18,7 +16,6 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		timeUntilNextShot = 0;
 		rb = GetComponent<Rigidbody2D> ();
-		gameManager = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ();
 		AudioSource[] audioSources = GetComponents<AudioSource>();
 		laserSound = audioSources [0];
 		deathSound = audioSources [1];
@@ -26,7 +23,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!gameManager.gameOver) {
+		if (!Services.GameManager.gameOver) {
 			Move ();
 			FaceTheCursor ();
 
@@ -58,7 +55,7 @@ public class PlayerController : MonoBehaviour {
 		float angleInRadians = Mathf.Deg2Rad * (transform.eulerAngles.z + 90);
 		Vector3 rotationVector = new Vector3 (Mathf.Cos (angleInRadians), Mathf.Sin(angleInRadians));
 
-		Instantiate (bulletPrefab, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
+		Instantiate (Services.PrefabDB.bullet, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
 
 		laserSound.Play ();
 	}
@@ -76,6 +73,6 @@ public class PlayerController : MonoBehaviour {
 		deathSound.Play ();
 		float audioLength = deathSound.clip.length;
 		Destroy (gameObject, audioLength);
-		gameManager.EndGame ();
+		Services.GameManager.EndGame ();
 	}
 }
