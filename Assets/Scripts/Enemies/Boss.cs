@@ -5,6 +5,7 @@ using UnityEngine;
 public class Boss : Enemy {
 
 	public float spinRate;
+	public float fireRate;
 	private GameObject ring;
 
 	protected override void Initialize ()
@@ -31,6 +32,7 @@ public class Boss : Enemy {
 		approachSpeed = 2f;
 		startingHealth = 100;
 		spinRate = 0;
+		fireRate = 0.15f;
 	}
 
 	protected override void SpecialUpdate ()
@@ -63,5 +65,13 @@ public class Boss : Enemy {
 			Services.EnemyManager.GenerateEnemy (relativeSpawnLocation + transform.position, Services.EnemyManager.RandomEnemyType ());
 			angle -= 45;
 		}
+	}
+
+	public void FireRandomly(){
+		float angle = Random.Range (-180, 0) * Mathf.Deg2Rad;
+		float spawnDistanceFromBoss = 7f;
+		Vector3 relativeSpawnLocation = new Vector3 (Mathf.Cos (angle), Mathf.Sin (angle), 0) * spawnDistanceFromBoss;
+		GameObject bullet = Instantiate (Services.PrefabDB.BossBullet, relativeSpawnLocation + transform.position, 
+			Quaternion.Euler (0, 0, 90 + angle * Mathf.Rad2Deg));
 	}
 }

@@ -67,10 +67,12 @@ public class GameManager : MonoBehaviour {
 		BossSetup setup = new BossSetup ();
 		BossAppearance appearance = new BossAppearance ();
 		BossSpawnMode spawnMode = new BossSpawnMode ();
+		BossFireMode fireMode = new BossFireMode ();
 
 		setup
 			.Then (appearance)
-			.Then (spawnMode);
+			.Then (spawnMode)
+			.Then (fireMode);
 
 		Services.TaskManager.AddTask (setup);
 	}

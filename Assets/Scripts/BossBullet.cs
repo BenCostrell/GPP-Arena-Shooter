@@ -1,13 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class BulletController : MonoBehaviour {
+public class BossBullet : MonoBehaviour {
 
 	public float speed;
 
-	// Use this for initialization
 	void Start () {
-		float angleInDegrees = Mathf.Deg2Rad * (transform.eulerAngles.z + 90);
+		float angleInDegrees = Mathf.Deg2Rad * (transform.eulerAngles.z - 90);
 		Vector3 rotationVector = new Vector2 (Mathf.Cos (angleInDegrees), Mathf.Sin(angleInDegrees));
 		GetComponent<Rigidbody2D> ().velocity = speed * rotationVector.normalized;
 	}
@@ -21,9 +21,9 @@ public class BulletController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider){
 		GameObject collidedObject = collider.gameObject;
-		if (collidedObject.tag == "Enemy") {
+		if (collidedObject.tag == "Player") {
 			Destroy (gameObject);
-			collidedObject.GetComponent<Enemy> ().TakeDamage (1);
+			collidedObject.GetComponent<PlayerController> ().Die ();
 		}
 	}
 }

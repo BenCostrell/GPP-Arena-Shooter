@@ -57,8 +57,9 @@ public class PlayerController : MonoBehaviour {
 		float angleInRadians = Mathf.Deg2Rad * (transform.eulerAngles.z + 90);
 		Vector3 rotationVector = new Vector3 (Mathf.Cos (angleInRadians), Mathf.Sin(angleInRadians));
 
-		Instantiate (Services.PrefabDB.Bullet, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
-
+		GameObject bullet = Instantiate (Services.PrefabDB.Bullet, transform.position + (rotationVector.normalized * bulletOffsetFactor), 
+			transform.rotation) as GameObject;
+		
 		laserSound.Play ();
 	}
 
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour {
 		inputEnabled = true;
 	}
 
-	void Die(){
+	public void Die(){
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<BoxCollider2D> ().enabled = false;
 		DisableInput ();

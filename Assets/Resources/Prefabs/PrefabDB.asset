@@ -14,3 +14,4 @@ MonoBehaviour:
   enemy: {fileID: 1000011172848850, guid: c4dbddc7906ac144cb98522274b4f3fe, type: 2}
   player: {fileID: 1835024704602622, guid: d8249bfe54bd276498af66d05c4f28cf, type: 2}
   bullet: {fileID: 1000012114980924, guid: ea5599c0989a00d49ab6cf70fcb9b152, type: 2}
+  bossBullet: {fileID: 1692122037259948, guid: ad97dbac90ec0c24bae8404b7775c692, type: 2}
