@@ -7,5 +7,6 @@ public class BossAppearance : Task {
 	private Boss boss;
 
 	protected override void Init () {
+		boss = Services.EnemyManager.SpawnBoss ();
 	}
 }

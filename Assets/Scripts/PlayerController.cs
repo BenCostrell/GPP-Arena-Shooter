@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour {
 	private float timeUntilNextShot;
 	private AudioSource laserSound;
 	private AudioSource deathSound;
+	private bool inputEnabled;
 
 	private Rigidbody2D rb;
 
 	// Use this for initialization
 	void Start () {
+		inputEnabled = true;
 		timeUntilNextShot = 0;
 		rb = GetComponent<Rigidbody2D> ();
 		AudioSource[] audioSources = GetComponents<AudioSource>();
@@ -23,7 +25,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!Services.GameManager.gameOver) {
+		if (inputEnabled) {
 			Move ();
 			FaceTheCursor ();
 
@@ -67,9 +69,18 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void DisableInput(){
+		inputEnabled = false;
+	}
+
+	void EnableInput(){
+		inputEnabled = true;
+	}
+
 	void Die(){
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<BoxCollider2D> ().enabled = false;
+		DisableInput ();
 		deathSound.Play ();
 		float audioLength = deathSound.clip.length;
 		Destroy (gameObject, audioLength);

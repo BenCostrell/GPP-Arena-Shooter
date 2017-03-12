@@ -16,10 +16,9 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		gameOverMessage.SetActive (false);
 		gameOver = false;
-		Services.EventManager = new EventManager ();
-		Services.EnemyManager = GameObject.FindGameObjectWithTag ("EnemyManager").GetComponent<EnemyManager> ();
-		Services.GameManager = this;
-		Services.PrefabDB = GameObject.FindGameObjectWithTag ("PrefabDB").GetComponent<PrefabDB> ();
+		InitializeServices ();
+
+		Services.EventManager.Register<EnemyDied> (Score);
 
 		InitializePlayer ();
 	}
@@ -29,15 +28,26 @@ public class GameManager : MonoBehaviour {
 		if (Input.GetButtonDown("Reset")){
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
+		Services.TaskManager.Update ();
+	}
+
+	void InitializeServices(){
+		Services.EventManager = new EventManager ();
+		Services.EnemyManager = GameObject.FindGameObjectWithTag ("EnemyManager").GetComponent<EnemyManager> ();
+		Services.GameManager = this;
+		Services.PrefabDB = GameObject.FindGameObjectWithTag ("PrefabDB").GetComponent<PrefabDB> ();
+		Services.TaskManager = new TaskManager ();
 	}
 
 	public void EndGame(){
 		gameOverMessage.SetActive (true);
 		gameOver = true;
+		Services.EventManager.Unregister<EnemyDied> (Score);
+		Services.EventManager.Fire (new GameOver ());
 	}
 
-	public void Score(int points){
-		score += points;
+	public void Score(EnemyDied e){
+		score += e.enemyThatDied.pointValue;
 		scoreText.GetComponent<Text> ().text = score.ToString ();
 	}
 

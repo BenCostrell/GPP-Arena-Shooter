@@ -13,13 +13,11 @@ public class Enemy : MonoBehaviour {
 	public int id;
 	private int health;
 	protected int startingHealth;
+	public int pointValue;
 
 
 	// Use this for initialization
 	void Start () {
-		coneFactor = 0.5f;
-		rb = GetComponent<Rigidbody2D> ();
-		startingHealth = 2;
 		Initialize ();
 	}
 	
@@ -31,7 +29,15 @@ public class Enemy : MonoBehaviour {
 	}
 
 	protected virtual void Initialize() {
+		SetValues ();
+		rb = GetComponent<Rigidbody2D> ();
 		health = startingHealth;
+	}
+
+	protected virtual void SetValues(){
+		startingHealth = 2;
+		pointValue = 10;
+		coneFactor = 45;
 	}
 
 	protected virtual void Move() {}
@@ -56,7 +62,7 @@ public class Enemy : MonoBehaviour {
 		float angleInDegrees = Mathf.Deg2Rad * (Services.GameManager.player.transform.eulerAngles.z + 90);
 		Vector3 playerRotationVector = new Vector3 (Mathf.Cos (angleInDegrees), Mathf.Sin (angleInDegrees)).normalized;
 		Vector3 vectorFromPlayerToMe = (transform.position - Services.GameManager.player.transform.position).normalized;
-		bool isFacing = Vector3.Dot (playerRotationVector, vectorFromPlayerToMe) > coneFactor;
+		bool isFacing = Mathf.Acos(Vector3.Dot (playerRotationVector, vectorFromPlayerToMe)) < (coneFactor * Mathf.Deg2Rad);
 
 		return isFacing;
 	}
@@ -72,14 +78,25 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	protected virtual void Die(){
-		GetComponent<SpriteRenderer> ().enabled = false;
-		GetComponent<CircleCollider2D> ().enabled = false;
+	protected float PlayDeathSound(){
 		GetComponent<AudioSource> ().Play ();
-		float audioLength = GetComponent<AudioSource> ().clip.length;
-		if (!Services.GameManager.gameOver) {
-			Services.GameManager.Score (10);
+		return GetComponent<AudioSource> ().clip.length;
+	}
+
+	protected void Disable(){
+		SpriteRenderer[] srs = GetComponentsInChildren<SpriteRenderer> ();
+		Collider2D[] cols = GetComponentsInChildren<Collider2D> ();
+		foreach (SpriteRenderer sr in srs) {
+			sr.enabled = false;
 		}
+		foreach (Collider2D col in cols) {
+			col.enabled = false;
+		}
+	}
+
+	protected virtual void Die(){
+		Disable ();
+		float audioLength = PlayDeathSound ();
 		Services.EnemyManager.DestroyEnemy (this, audioLength);
 	}
 }

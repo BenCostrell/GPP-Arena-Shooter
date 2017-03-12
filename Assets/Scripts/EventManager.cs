@@ -4,7 +4,16 @@ using UnityEngine;
 
 public abstract class Event {}
 
-public class EnemyDied : Event {}
+public class EnemyDied : Event {
+	public Enemy enemyThatDied;
+	public EnemyDied (Enemy enemy){
+		enemyThatDied = enemy;
+	}
+}
+
+public class WaveCleared : Event {}
+
+public class GameOver : Event {}
 
 public class EventManager {
 
