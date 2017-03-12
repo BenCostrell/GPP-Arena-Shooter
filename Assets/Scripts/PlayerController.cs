@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void DisableInput(){
 		inputEnabled = false;
+		rb.velocity = Vector3.zero;
 	}
 
 	public void EnableInput(){

@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
 	public int health;
 	public int startingHealth;
 	public int pointValue;
+	public bool frozen;
 
 
 	// Use this for initialization
@@ -23,7 +24,7 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!Services.GameManager.gameOver) {
+		if (!Services.GameManager.gameOver && !frozen) {
 			Move ();
 			SpecialUpdate ();
 		}
@@ -33,6 +34,7 @@ public class Enemy : MonoBehaviour {
 		SetValues ();
 		rb = GetComponent<Rigidbody2D> ();
 		health = startingHealth;
+		frozen = false;
 	}
 
 	protected virtual void SetValues(){
@@ -45,7 +47,7 @@ public class Enemy : MonoBehaviour {
 
 	protected virtual void Move() {}
 
-	protected void ApproachPlayer(){
+	public void ApproachPlayer(){
 		rb.MovePosition(Vector3.MoveTowards (transform.position, Services.GameManager.player.transform.position, approachSpeed * Time.deltaTime));
 	}
 
@@ -101,5 +103,11 @@ public class Enemy : MonoBehaviour {
 		Disable ();
 		float audioLength = PlayDeathSound ();
 		Services.EnemyManager.DestroyEnemy (this, audioLength);
+	}
+
+	public void Freeze(){
+		frozen = true;
+		rb.velocity = Vector3.zero;
+		GetComponent<Collider2D> ().enabled = false;
 	}
 }

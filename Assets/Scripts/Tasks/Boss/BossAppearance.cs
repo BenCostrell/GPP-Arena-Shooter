@@ -9,6 +9,8 @@ public class BossAppearance : Task {
 	protected override void Init () {
 		Services.EnemyManager.SpawnBoss ();
 		Services.GameManager.bossHealthBack.SetActive (true);
+		Services.GameManager.bossHealthBack.transform.localScale = Vector3.one;
+		Services.GameManager.bossHealthBar.transform.localScale = Vector3.one;
 	}
 
 	internal override void Update ()

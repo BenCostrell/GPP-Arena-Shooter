@@ -41,7 +41,7 @@ public class EnemyManager : MonoBehaviour {
 		Services.EventManager.Unregister<GameOver> (OnGameOver);
 	}
 
-	void SpawnNewWave(){
+	public void SpawnNewWave(){
 		GenerateWave (enemiesToSpawn);
 	}
 
@@ -108,9 +108,9 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	public void DestroyEnemy(Enemy enemy, float timeToDestroy){
-		Destroy (enemy.gameObject, timeToDestroy);
 		Services.EventManager.Fire (new EnemyDied(enemy));
 		enemyList.Remove (enemy);
+		Destroy (enemy.gameObject, timeToDestroy);
 		if (enemyList.Count == 0) {
 			Services.EventManager.Fire (new WaveCleared ());
 		}
@@ -119,5 +119,23 @@ public class EnemyManager : MonoBehaviour {
 	public void SpawnBoss(){
 		GameObject bossObj = Instantiate (Services.PrefabDB.Enemy, bossSpawnLocation, Quaternion.identity);
 		boss = bossObj.AddComponent<Boss> ();
+	}
+
+	public void FreezeAllEnemies(){
+		foreach (Enemy enemy in enemyList) {
+			enemy.Freeze ();
+		}
+	}
+
+	public void DestroyAllEnemies(){
+		for (int i = enemyList.Count - 1; i >= 0; i--) {
+			DestroyEnemy (enemyList[i], 0);
+		}
+	}
+
+	public void ShrinkAllEnemies(Vector3 size){
+		foreach (Enemy enemy in enemyList) {
+			enemy.transform.localScale = size;
+		}
 	}
 }

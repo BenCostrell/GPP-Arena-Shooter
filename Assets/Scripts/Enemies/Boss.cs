@@ -50,10 +50,10 @@ public class Boss : Enemy {
 		Services.GameManager.bossHealthBar.transform.localScale = new Vector3 (1, healthfloat / startingHealth, 1);
 	}
 
-	protected override void Die ()
-	{
-		Disable ();
-		PlayDeathSound ();
+	protected override void Die () {}
+
+	public void DestroyThis(){
+		Destroy (gameObject);
 	}
 
 	public void SpawnEnemies(){

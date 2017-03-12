@@ -14,7 +14,7 @@ public class ShyEnemy : Enemy {
 	{
 		base.SetValues ();
 		approachSpeed = 10f;
-		avoidSpeed = 2f;
+		avoidSpeed = -0.5f;
 	}
 
 	protected override void Move(){

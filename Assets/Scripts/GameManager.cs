@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject player;
 	public float setupDuration;
 	public float appearanceDuration;
+	public float endingDuration;
 	public Vector3 playerPositionBeforeBossBattle;
 
 	// Use this for initialization
@@ -68,11 +69,15 @@ public class GameManager : MonoBehaviour {
 		BossAppearance appearance = new BossAppearance ();
 		BossSpawnMode spawnMode = new BossSpawnMode ();
 		BossFireMode fireMode = new BossFireMode ();
+		BossChaseMode chaseMode = new BossChaseMode ();
+		BossEnding ending = new BossEnding ();
 
 		setup
 			.Then (appearance)
 			.Then (spawnMode)
-			.Then (fireMode);
+			.Then (fireMode)
+			.Then (chaseMode)
+			.Then (ending);
 
 		Services.TaskManager.AddTask (setup);
 	}

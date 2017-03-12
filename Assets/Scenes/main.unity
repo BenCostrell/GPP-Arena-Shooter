@@ -277,6 +277,7 @@ MonoBehaviour:
   player: {fileID: 0}
   setupDuration: 1
   appearanceDuration: 1
+  endingDuration: 2
   playerPositionBeforeBossBattle: {x: 0, y: -9, z: 0}
 --- !u!4 &413547534
 Transform:
