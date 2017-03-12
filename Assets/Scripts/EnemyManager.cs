@@ -57,7 +57,15 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 
-	void GenerateEnemy(Vector3 location, EnemyType type){
+	public void ResumeAutoRespawning(){
+		Services.EventManager.Register<WaveCleared> (OnWaveCleared);
+	}
+
+	public void PauseAutoRespawning(){
+		Services.EventManager.Unregister<WaveCleared> (OnWaveCleared);
+	}
+
+	public void GenerateEnemy(Vector3 location, EnemyType type){
 		GameObject newEnemy = Instantiate (Services.PrefabDB.Enemy, location, Quaternion.identity) as GameObject;
 		if (type == EnemyType.Bold) {
 			newEnemy.AddComponent<BoldEnemy> ();
@@ -89,13 +97,14 @@ public class EnemyManager : MonoBehaviour {
 				xCoord = -spawnRectWidth/2;
 				yCoord = -spawnRectHeight / 2 + pointOnUnfoldedRectangle - ((2 * spawnRectWidth) + spawnRectHeight);
 			}
-
-
-			int typeNum = Random.Range (0, spawnableEnemyTypes.Count);
-			EnemyType type = spawnableEnemyTypes [typeNum];
-
-			GenerateEnemy (new Vector3 (xCoord, yCoord, 0), type);
+				
+			GenerateEnemy (new Vector3 (xCoord, yCoord, 0), RandomEnemyType());
 		}
+	}
+
+	public EnemyType RandomEnemyType(){
+		int typeNum = Random.Range (0, spawnableEnemyTypes.Count);
+		return spawnableEnemyTypes [typeNum];;
 	}
 
 	public void DestroyEnemy(Enemy enemy, float timeToDestroy){

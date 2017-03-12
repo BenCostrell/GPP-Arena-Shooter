@@ -17,6 +17,7 @@ public class BossSetup : Task {
 		initialPlayerRotation = player.transform.rotation.eulerAngles;
 		player.GetComponent<PlayerController> ().DisableInput ();
 		player.GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
+		Services.EnemyManager.PauseAutoRespawning ();
 	}
 
 	internal override void Update ()

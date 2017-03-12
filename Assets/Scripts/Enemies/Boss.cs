@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Boss : Enemy {
+
+	public float spinRate;
+	private GameObject ring;
+
 	protected override void Initialize ()
 	{
 		GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Art/bossCenter");
 
-		GameObject ring = new GameObject ();
+		ring = new GameObject ();
 		SpriteRenderer ringSr = ring.AddComponent<SpriteRenderer> ();
 		ringSr.sprite = Resources.Load<Sprite> ("Art/bossRing");
 		ring.transform.SetParent (transform, false);
@@ -26,6 +30,12 @@ public class Boss : Enemy {
 		base.SetValues ();
 		approachSpeed = 2f;
 		startingHealth = 100;
+		spinRate = 0;
+	}
+
+	protected override void SpecialUpdate ()
+	{
+		ring.transform.Rotate (Vector3.forward, spinRate);
 	}
 
 	public override void TakeDamage(int damage){
@@ -42,5 +52,16 @@ public class Boss : Enemy {
 	{
 		Disable ();
 		PlayDeathSound ();
+	}
+
+	public void SpawnEnemies(){
+		float spawnDistanceFromBoss = 8f;
+		float angle = 0f;
+		Vector3 relativeSpawnLocation;
+		for (int i = 0; i < 5; i++) {
+			relativeSpawnLocation = new Vector3 (Mathf.Cos (angle * Mathf.Deg2Rad), Mathf.Sin (angle * Mathf.Deg2Rad), 0) * spawnDistanceFromBoss;
+			Services.EnemyManager.GenerateEnemy (relativeSpawnLocation + transform.position, Services.EnemyManager.RandomEnemyType ());
+			angle -= 45;
+		}
 	}
 }

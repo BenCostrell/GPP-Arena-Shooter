@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour {
 	protected float zagTime;
 	protected float timeUntilZag;
 	public int id;
-	protected int health;
-	protected int startingHealth;
+	public int health;
+	public int startingHealth;
 	public int pointValue;
 
 
@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 		if (!Services.GameManager.gameOver) {
 			Move ();
+			SpecialUpdate ();
 		}
 	}
 
@@ -39,6 +40,8 @@ public class Enemy : MonoBehaviour {
 		pointValue = 10;
 		coneFactor = 45;
 	}
+
+	protected virtual void SpecialUpdate() {}
 
 	protected virtual void Move() {}
 

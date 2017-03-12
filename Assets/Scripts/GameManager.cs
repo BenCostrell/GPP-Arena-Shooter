@@ -66,9 +66,11 @@ public class GameManager : MonoBehaviour {
 	public void ItsBossTime(){
 		BossSetup setup = new BossSetup ();
 		BossAppearance appearance = new BossAppearance ();
+		BossSpawnMode spawnMode = new BossSpawnMode ();
 
 		setup
-			.Then (appearance);
+			.Then (appearance)
+			.Then (spawnMode);
 
 		Services.TaskManager.AddTask (setup);
 	}

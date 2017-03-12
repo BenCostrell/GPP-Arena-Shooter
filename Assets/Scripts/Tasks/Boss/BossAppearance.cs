@@ -29,5 +29,6 @@ public class BossAppearance : Task {
 	protected override void OnSuccess ()
 	{
 		Services.GameManager.player.GetComponent<PlayerController> ().EnableInput ();
+		Services.EnemyManager.boss.spinRate = 1;
 	}
 }
