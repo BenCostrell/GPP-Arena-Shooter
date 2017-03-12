@@ -9,6 +9,7 @@ public class BossFireMode : Task {
 	{
 		Services.EnemyManager.boss.FireRandomly ();
 		timeSinceLastShot = 0;
+		Services.EnemyManager.boss.spinRate = 2;
 	}
 
 	internal override void Update ()

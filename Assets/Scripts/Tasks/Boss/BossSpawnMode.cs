@@ -7,6 +7,7 @@ public class BossSpawnMode : Task {
 	{
 		Services.EnemyManager.boss.SpawnEnemies ();
 		Services.EventManager.Register<WaveCleared> (OnWaveCleared);
+		Services.EnemyManager.boss.spinRate = 1;
 	}
 
 	internal override void Update ()

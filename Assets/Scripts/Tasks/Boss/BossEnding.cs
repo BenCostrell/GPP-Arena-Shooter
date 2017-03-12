@@ -10,6 +10,7 @@ public class BossEnding : Task {
 	{
 		Services.GameManager.player.GetComponent<PlayerController> ().DisableInput ();
 		Services.EnemyManager.FreezeAllEnemies ();
+		Services.EnemyManager.boss.Freeze ();
 		playerLocationAtEnd = Services.GameManager.player.transform.position;
 	}
 

@@ -7,6 +7,7 @@ public class BossChaseMode : Task {
 	{
 		Services.EnemyManager.boss.SpawnEnemies ();
 		Services.EventManager.Register<WaveCleared> (OnWaveCleared);
+		Services.EnemyManager.boss.spinRate = 3;
 	}
 
 	internal override void Update ()

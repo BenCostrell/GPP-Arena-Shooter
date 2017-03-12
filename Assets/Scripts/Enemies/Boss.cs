@@ -29,7 +29,7 @@ public class Boss : Enemy {
 	protected override void SetValues ()
 	{
 		base.SetValues ();
-		approachSpeed = 2f;
+		approachSpeed = 3f;
 		startingHealth = 100;
 		spinRate = 0;
 		fireRate = 0.15f;
