@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
 	protected float zagTime;
 	protected float timeUntilZag;
 	public int id;
-	private int health;
+	protected int health;
 	protected int startingHealth;
 	public int pointValue;
 

@@ -8,6 +8,7 @@ public class BossAppearance : Task {
 
 	protected override void Init () {
 		Services.EnemyManager.SpawnBoss ();
+		Services.GameManager.bossHealthBack.SetActive (true);
 	}
 
 	internal override void Update ()
@@ -16,6 +17,8 @@ public class BossAppearance : Task {
 		Vector3 targetSize = Services.EnemyManager.bossSize * Vector3.one;
 		float duration = Services.GameManager.appearanceDuration;
 		boss.transform.localScale = Vector3.Lerp (Vector3.zero, targetSize, Easing.QuartEaseOut(timeElapsed / duration));
+		Services.GameManager.bossHealthBar.transform.localScale = Vector3.Lerp (new Vector3 (1, 0, 1), Vector3.one, 
+			Easing.QuartEaseOut (timeElapsed / duration));
 		timeElapsed = Mathf.Min(duration, timeElapsed + Time.deltaTime);
 
 		if (boss.transform.localScale == targetSize) {

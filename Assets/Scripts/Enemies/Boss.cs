@@ -28,6 +28,16 @@ public class Boss : Enemy {
 		startingHealth = 100;
 	}
 
+	public override void TakeDamage(int damage){
+		base.TakeDamage (damage);
+		UpdateHealthUI ();
+	}
+
+	protected void UpdateHealthUI(){
+		float healthfloat = health;
+		Services.GameManager.bossHealthBar.transform.localScale = new Vector3 (1, healthfloat / startingHealth, 1);
+	}
+
 	protected override void Die ()
 	{
 		Disable ();

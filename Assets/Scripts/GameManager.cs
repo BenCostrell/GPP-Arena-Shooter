@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject gameOverMessage;
 	public GameObject bossBattleMessage;
+	public GameObject bossHealthBack;
+	public GameObject bossHealthBar;
 	public bool gameOver;
 	public int score;
 	public GameObject scoreText;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		gameOverMessage.SetActive (false);
 		bossBattleMessage.SetActive (false);
+		bossHealthBack.SetActive (false);
 		gameOver = false;
 		InitializeServices ();
 
