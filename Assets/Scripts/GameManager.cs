@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 		Services.EventManager = new EventManager ();
 		Services.EnemyManager = GameObject.FindGameObjectWithTag ("EnemyManager").GetComponent<EnemyManager> ();
 		Services.GameManager = this;
-		Services.PrefabDB = GameObject.FindGameObjectWithTag ("PrefabDB").GetComponent<PrefabDB> ();
+		Services.PrefabDB = Resources.Load<PrefabDB> ("Prefabs/PrefabDB");
 		Services.TaskManager = new TaskManager ();
 	}
 
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void InitializePlayer(){
-		player = Instantiate (Services.PrefabDB.player, Vector3.zero, Quaternion.identity) as GameObject;
+		player = Instantiate (Services.PrefabDB.Player, Vector3.zero, Quaternion.identity) as GameObject;
 	}
 
 	public void ItsBossTime(){

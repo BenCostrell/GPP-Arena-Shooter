@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrefabDB : MonoBehaviour {
-	public GameObject enemy;
-	public GameObject player;
-	public GameObject bullet;
+[CreateAssetMenu (menuName = "Prefab DB")]
+public class PrefabDB : ScriptableObject {
+	[SerializeField]
+	private GameObject enemy;
+	public GameObject Enemy { get { return enemy; } }
+
+	[SerializeField]
+	private GameObject player;
+	public GameObject Player { get { return player; } }
+
+	[SerializeField]
+	private GameObject bullet;
+	public GameObject Bullet { get { return bullet; } }
 }

@@ -16,6 +16,7 @@ public class BossSetup : Task {
 		initialPlayerPosition = player.transform.position;
 		initialPlayerRotation = player.transform.rotation.eulerAngles;
 		player.GetComponent<PlayerController> ().DisableInput ();
+		player.GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
 	}
 
 	internal override void Update ()
@@ -23,10 +24,13 @@ public class BossSetup : Task {
 		GameObject player = Services.GameManager.player;
 		float duration = Services.GameManager.setupDuration;
 		Vector3 targetPosition = Services.GameManager.playerPositionBeforeBossBattle;
-		player.transform.position = Vector3.Lerp (initialPlayerPosition, targetPosition, timeElapsed / duration);
-		player.transform.rotation = Quaternion.Euler (Vector3.Lerp (initialPlayerRotation, Vector3.zero, timeElapsed / duration));
+
+		player.transform.position = Vector3.Lerp (initialPlayerPosition, targetPosition, Easing.QuadEaseOut(timeElapsed / duration));
+		player.transform.rotation = Quaternion.Euler (Vector3.Lerp (initialPlayerRotation, Vector3.zero, Easing.QuadEaseOut(timeElapsed / duration)));
+		Services.GameManager.bossBattleMessage.transform.localScale = Vector3.LerpUnclamped (Vector3.zero, Vector3.one, 
+			Easing.BackEaseOut (timeElapsed / duration));
 		
-		timeElapsed += Time.deltaTime;
+		timeElapsed = Mathf.Min(duration, timeElapsed + Time.deltaTime);
 
 		if (player.transform.position == targetPosition && player.transform.rotation == Quaternion.identity) {
 			SetStatus (TaskStatus.Success);
@@ -37,6 +41,4 @@ public class BossSetup : Task {
 	{
 		Services.GameManager.bossBattleMessage.SetActive (false);
 	}
-
-
 }

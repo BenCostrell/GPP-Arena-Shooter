@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 		float angleInRadians = Mathf.Deg2Rad * (transform.eulerAngles.z + 90);
 		Vector3 rotationVector = new Vector3 (Mathf.Cos (angleInRadians), Mathf.Sin(angleInRadians));
 
-		Instantiate (Services.PrefabDB.bullet, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
+		Instantiate (Services.PrefabDB.Bullet, transform.position + (rotationVector.normalized * bulletOffsetFactor), transform.rotation);
 
 		laserSound.Play ();
 	}

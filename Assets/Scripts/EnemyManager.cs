@@ -58,7 +58,7 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	void GenerateEnemy(Vector3 location, EnemyType type){
-		GameObject newEnemy = Instantiate (Services.PrefabDB.enemy, location, Quaternion.identity) as GameObject;
+		GameObject newEnemy = Instantiate (Services.PrefabDB.Enemy, location, Quaternion.identity) as GameObject;
 		if (type == EnemyType.Bold) {
 			newEnemy.AddComponent<BoldEnemy> ();
 		} else if (type == EnemyType.Shy) {
@@ -108,7 +108,7 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	public void SpawnBoss(){
-		GameObject bossObj = Instantiate (Services.PrefabDB.enemy, bossSpawnLocation, Quaternion.identity);
+		GameObject bossObj = Instantiate (Services.PrefabDB.Enemy, bossSpawnLocation, Quaternion.identity);
 		boss = bossObj.AddComponent<Boss> ();
 	}
 }
