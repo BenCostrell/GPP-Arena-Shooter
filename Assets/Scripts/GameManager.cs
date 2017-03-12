@@ -7,14 +7,19 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	public GameObject gameOverMessage;
+	public GameObject bossBattleMessage;
 	public bool gameOver;
 	public int score;
 	public GameObject scoreText;
 	public GameObject player;
+	public float setupDuration;
+	public float appearanceDuration;
+	public Vector3 playerPositionBeforeBossBattle;
 
 	// Use this for initialization
 	void Start () {
 		gameOverMessage.SetActive (false);
+		bossBattleMessage.SetActive (false);
 		gameOver = false;
 		InitializeServices ();
 
@@ -53,5 +58,15 @@ public class GameManager : MonoBehaviour {
 
 	private void InitializePlayer(){
 		player = Instantiate (Services.PrefabDB.player, Vector3.zero, Quaternion.identity) as GameObject;
+	}
+
+	public void ItsBossTime(){
+		BossSetup setup = new BossSetup ();
+		BossAppearance appearance = new BossAppearance ();
+
+		setup
+			.Then (appearance);
+
+		Services.TaskManager.AddTask (setup);
 	}
 }

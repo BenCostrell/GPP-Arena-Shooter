@@ -268,10 +268,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverMessage: {fileID: 280348596}
+  bossBattleMessage: {fileID: 1661049002}
   gameOver: 0
   score: 0
   scoreText: {fileID: 734751457}
   player: {fileID: 0}
+  setupDuration: 1
+  appearanceDuration: 1
+  playerPositionBeforeBossBattle: {x: 0, y: -9, z: 0}
 --- !u!4 &413547534
 Transform:
   m_ObjectHideFlags: 0
@@ -361,6 +365,8 @@ MonoBehaviour:
   spawnRectWidth: 45
   spawnRectHeight: 25
   bossSpawnLocation: {x: 0, y: 10, z: 0}
+  boss: {fileID: 0}
+  bossSize: 2
 --- !u!4 &642828482
 Transform:
   m_ObjectHideFlags: 0

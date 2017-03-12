@@ -69,11 +69,11 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void DisableInput(){
+	public void DisableInput(){
 		inputEnabled = false;
 	}
 
-	void EnableInput(){
+	public void EnableInput(){
 		inputEnabled = true;
 	}
 

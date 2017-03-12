@@ -15,6 +15,8 @@ public class EnemyManager : MonoBehaviour {
 	private List<Enemy> enemyList;
 	public enum EnemyType {Bold, Shy, ZigZag, Vengeful, Boss};
 	private List<EnemyType> spawnableEnemyTypes;
+	public Boss boss;
+	public float bossSize;
 
 	// Use this for initialization
 	void Start () {
@@ -49,8 +51,7 @@ public class EnemyManager : MonoBehaviour {
 			enemiesToSpawn += 1;
 		}
 		if (waveCount % wavesBeforeBoss == 0) {
-			BossAppearance bossAppearance = new BossAppearance ();
-			Services.TaskManager.AddTask (bossAppearance);
+			Services.GameManager.ItsBossTime ();
 		} else {
 			SpawnNewWave ();
 		}
@@ -106,9 +107,8 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 
-	public Boss SpawnBoss(){
+	public void SpawnBoss(){
 		GameObject bossObj = Instantiate (Services.PrefabDB.enemy, bossSpawnLocation, Quaternion.identity);
-		Boss boss = bossObj.AddComponent<Boss> ();
-		return boss;
+		boss = bossObj.AddComponent<Boss> ();
 	}
 }

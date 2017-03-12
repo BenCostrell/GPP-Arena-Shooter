@@ -11,9 +11,7 @@ public class Boss : Enemy {
 		SpriteRenderer ringSr = ring.AddComponent<SpriteRenderer> ();
 		ringSr.sprite = Resources.Load<Sprite> ("Art/bossRing");
 		ring.transform.SetParent (transform, false);
-
-		transform.localScale = 2 * Vector3.one;
-
+	
 		CircleCollider2D col = GetComponent<CircleCollider2D> ();
 		col.radius = 1;
 
