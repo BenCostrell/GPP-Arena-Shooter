@@ -15,6 +15,15 @@ public class WaveCleared : Event {}
 
 public class GameOver : Event {}
 
+public class AttackPrepInterrupted : Event
+{
+    public SmartEnemy enemy;
+    public AttackPrepInterrupted(SmartEnemy en)
+    {
+        enemy = en;
+    }
+}
+
 public class EventManager {
 
 	public delegate void EventDelegate<T>(T e) where T: Event;

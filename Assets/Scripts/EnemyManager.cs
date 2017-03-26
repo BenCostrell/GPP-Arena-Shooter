@@ -13,7 +13,7 @@ public class EnemyManager : MonoBehaviour {
 	public float spawnRectHeight;
 	public Vector3 bossSpawnLocation;
 	private List<Enemy> enemyList;
-	public enum EnemyType {Bold, Shy, ZigZag, Vengeful, Boss};
+	public enum EnemyType {Bold, Shy, ZigZag, Vengeful, Smart, Boss};
 	private List<EnemyType> spawnableEnemyTypes;
 	public Boss boss;
 	public float bossSize;
@@ -23,7 +23,7 @@ public class EnemyManager : MonoBehaviour {
 		enemiesToSpawn = initialNumEnemiesPerWave;
 		waveCount = 1;
 		enemyList = new List<Enemy> ();
-		spawnableEnemyTypes = new List<EnemyType> (){ EnemyType.Bold, EnemyType.Shy, EnemyType.ZigZag, EnemyType.Vengeful };
+		spawnableEnemyTypes = new List<EnemyType> (){ EnemyType.Bold, EnemyType.Shy, EnemyType.ZigZag, EnemyType.Vengeful, EnemyType.Smart };
 
 		Services.EventManager.Register<WaveCleared> (OnWaveCleared);
 		Services.EventManager.Register<GameOver> (OnGameOver);
@@ -67,15 +67,27 @@ public class EnemyManager : MonoBehaviour {
 
 	public void GenerateEnemy(Vector3 location, EnemyType type){
 		GameObject newEnemy = Instantiate (Services.PrefabDB.Enemy, location, Quaternion.identity) as GameObject;
-		if (type == EnemyType.Bold) {
-			newEnemy.AddComponent<BoldEnemy> ();
-		} else if (type == EnemyType.Shy) {
-			newEnemy.AddComponent<ShyEnemy> ();
-		} else if (type == EnemyType.ZigZag) {
-			newEnemy.AddComponent<ZigZagEnemy> ();
-		} else if (type == EnemyType.Vengeful){
-			newEnemy.AddComponent<VengefulEnemy>();
-		}
+        switch (type)
+        {
+            case EnemyType.Bold:
+                newEnemy.AddComponent<BoldEnemy>();
+                break;
+            case EnemyType.Shy:
+                newEnemy.AddComponent<ShyEnemy>();
+                break;
+            case EnemyType.ZigZag:
+                newEnemy.AddComponent<ZigZagEnemy>();
+                break;
+            case EnemyType.Vengeful:
+                newEnemy.AddComponent<VengefulEnemy>();
+                break;
+            case EnemyType.Smart:
+                newEnemy.AddComponent<SmartEnemy>();
+                break;
+            default:
+                break;
+        }
+
 		enemyList.Add (newEnemy.GetComponent<Enemy> ());
 	}
 

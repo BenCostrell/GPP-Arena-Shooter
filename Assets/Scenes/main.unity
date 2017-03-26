@@ -321,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialNumEnemiesPerWave: 2
   wavesBeforeIncrease: 5
-  wavesBeforeBoss: 2
+  wavesBeforeBoss: 10
   spawnRectWidth: 45
   spawnRectHeight: 25
   bossSpawnLocation: {x: 0, y: 10, z: 0}
