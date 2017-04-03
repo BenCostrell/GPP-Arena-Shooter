@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
 	public float endingDuration;
 	public Vector3 playerPositionBeforeBossBattle;
 
+
 	// Use this for initialization
 	void Start () {
 		gameOverMessage.SetActive (false);
