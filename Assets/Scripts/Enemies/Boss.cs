@@ -47,7 +47,7 @@ public class Boss : Enemy {
 
 	protected void UpdateHealthUI(){
 		float healthfloat = health;
-		Services.GameManager.bossHealthBar.transform.localScale = new Vector3 (1, healthfloat / startingHealth, 1);
+		Services.MainGame.bossHealthBar.transform.localScale = new Vector3 (1, healthfloat / startingHealth, 1);
 	}
 
 	protected override void Die () {}

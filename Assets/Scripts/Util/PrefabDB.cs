@@ -19,4 +19,8 @@ public class PrefabDB : ScriptableObject {
 	[SerializeField]
 	private GameObject bossBullet;
 	public GameObject BossBullet { get { return bossBullet; } }
+
+    [SerializeField]
+    private GameObject[] scenes;
+    public GameObject[] Scenes { get { return scenes; } }
 }

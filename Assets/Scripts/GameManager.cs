@@ -6,31 +6,14 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-	public GameObject gameOverMessage;
-	public GameObject bossBattleMessage;
-	public GameObject bossHealthBack;
-	public GameObject bossHealthBar;
-	public bool gameOver;
-	public int score;
-	public GameObject scoreText;
-	public GameObject player;
-	public float setupDuration;
-	public float appearanceDuration;
-	public float endingDuration;
-	public Vector3 playerPositionBeforeBossBattle;
+    public GameObject sceneRoot;
 
-
-	// Use this for initialization
+	void Awake()
+    {
+        InitializeServices();
+    }
 	void Start () {
-		gameOverMessage.SetActive (false);
-		bossBattleMessage.SetActive (false);
-		bossHealthBack.SetActive (false);
-		gameOver = false;
-		InitializeServices ();
-
-		Services.EventManager.Register<EnemyDied> (Score);
-
-		InitializePlayer ();
+        Services.SceneStackManager.PushScene<TitleScreen>();
 	}
 	
 	// Update is called once per frame
@@ -43,43 +26,15 @@ public class GameManager : MonoBehaviour {
 
 	void InitializeServices(){
 		Services.EventManager = new EventManager ();
-		Services.EnemyManager = GameObject.FindGameObjectWithTag ("EnemyManager").GetComponent<EnemyManager> ();
 		Services.GameManager = this;
 		Services.PrefabDB = Resources.Load<PrefabDB> ("Prefabs/PrefabDB");
 		Services.TaskManager = new TaskManager ();
-	}
+        Services.SceneStackManager = new SceneStackManager<TransitionData>(sceneRoot, Services.PrefabDB.Scenes);
+    }
 
-	public void EndGame(){
-		gameOverMessage.SetActive (true);
-		gameOver = true;
-		Services.EventManager.Unregister<EnemyDied> (Score);
-		Services.EventManager.Fire (new GameOver ());
-	}
+	
 
-	public void Score(EnemyDied e){
-		score += e.enemyThatDied.pointValue;
-		scoreText.GetComponent<Text> ().text = score.ToString ();
-	}
+	
 
-	private void InitializePlayer(){
-		player = Instantiate (Services.PrefabDB.Player, Vector3.zero, Quaternion.identity) as GameObject;
-	}
-
-	public void ItsBossTime(){
-		BossSetup setup = new BossSetup ();
-		BossAppearance appearance = new BossAppearance ();
-		BossSpawnMode spawnMode = new BossSpawnMode ();
-		BossFireMode fireMode = new BossFireMode ();
-		BossChaseMode chaseMode = new BossChaseMode ();
-		BossEnding ending = new BossEnding ();
-
-		setup
-			.Then (appearance)
-			.Then (spawnMode)
-			.Then (fireMode)
-			.Then (chaseMode)
-			.Then (ending);
-
-		Services.TaskManager.AddTask (setup);
-	}
+	
 }

@@ -15,3 +15,7 @@ MonoBehaviour:
   player: {fileID: 1835024704602622, guid: d8249bfe54bd276498af66d05c4f28cf, type: 2}
   bullet: {fileID: 1000012114980924, guid: ea5599c0989a00d49ab6cf70fcb9b152, type: 2}
   bossBullet: {fileID: 1692122037259948, guid: ad97dbac90ec0c24bae8404b7775c692, type: 2}
+  scenes:
+  - {fileID: 1276800253360204, guid: 33729db949f73e444a733c46ca2c39e4, type: 2}
+  - {fileID: 1568460235620112, guid: 2189afbacd75c714c8a9b74a9eb6918b, type: 2}
+  - {fileID: 1969711745219426, guid: adde17f2bb6a1824b9104a242b602bf1, type: 2}

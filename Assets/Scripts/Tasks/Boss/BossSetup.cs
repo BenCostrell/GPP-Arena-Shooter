@@ -10,8 +10,8 @@ public class BossSetup : Task {
 
 	protected override void Init ()
 	{
-		GameObject player = Services.GameManager.player;
-		Services.GameManager.bossBattleMessage.SetActive (true);
+		GameObject player = Services.MainGame.player;
+		Services.MainGame.bossBattleMessage.SetActive (true);
 		timeElapsed = 0;
 		initialPlayerPosition = player.transform.position;
 		initialPlayerRotation = player.transform.rotation.eulerAngles;
@@ -21,13 +21,13 @@ public class BossSetup : Task {
 
 	internal override void Update ()
 	{
-		GameObject player = Services.GameManager.player;
-		float duration = Services.GameManager.setupDuration;
-		Vector3 targetPosition = Services.GameManager.playerPositionBeforeBossBattle;
+		GameObject player = Services.MainGame.player;
+		float duration = Services.MainGame.setupDuration;
+		Vector3 targetPosition = Services.MainGame.playerPositionBeforeBossBattle;
 
 		player.transform.position = Vector3.Lerp (initialPlayerPosition, targetPosition, Easing.QuadEaseOut(timeElapsed / duration));
 		player.transform.rotation = Quaternion.Euler (Vector3.Lerp (initialPlayerRotation, Vector3.zero, Easing.QuadEaseOut(timeElapsed / duration)));
-		Services.GameManager.bossBattleMessage.transform.localScale = Vector3.LerpUnclamped (Vector3.zero, Vector3.one, 
+		Services.MainGame.bossBattleMessage.transform.localScale = Vector3.LerpUnclamped (Vector3.zero, Vector3.one, 
 			Easing.BackEaseOut (timeElapsed / duration));
 		
 		timeElapsed = Mathf.Min(duration, timeElapsed + Time.deltaTime);
@@ -39,6 +39,6 @@ public class BossSetup : Task {
 
 	protected override void OnSuccess ()
 	{
-		Services.GameManager.bossBattleMessage.SetActive (false);
+		Services.MainGame.bossBattleMessage.SetActive (false);
 	}
 }

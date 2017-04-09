@@ -10,13 +10,14 @@ public class PlayerController : MonoBehaviour {
 	private AudioSource laserSound;
 	private AudioSource deathSound;
 	private bool inputEnabled;
+    public bool inTitleScreen = false;
 
 	private Rigidbody2D rb;
 
 	// Use this for initialization
 	void Start () {
-		inputEnabled = true;
-		timeUntilNextShot = 0;
+        inputEnabled = !inTitleScreen;
+        timeUntilNextShot = 0;
 		rb = GetComponent<Rigidbody2D> ();
 		AudioSource[] audioSources = GetComponents<AudioSource>();
 		laserSound = audioSources [0];
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour {
 		Vector3 rotationVector = new Vector3 (Mathf.Cos (angleInRadians), Mathf.Sin(angleInRadians));
 
 		GameObject bullet = Instantiate (Services.PrefabDB.Bullet, transform.position + (rotationVector.normalized * bulletOffsetFactor), 
-			transform.rotation) as GameObject;
+			transform.rotation, transform.parent) as GameObject;
 		
 		laserSound.Play ();
 	}
@@ -86,6 +87,6 @@ public class PlayerController : MonoBehaviour {
 		deathSound.Play ();
 		float audioLength = deathSound.clip.length;
 		Destroy (gameObject, audioLength);
-		Services.GameManager.EndGame ();
+		Services.MainGame.EndGame ();
 	}
 }

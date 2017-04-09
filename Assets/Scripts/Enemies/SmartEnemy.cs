@@ -89,7 +89,6 @@ public class SmartEnemy : Enemy {
             hitThisFrame = false;
         }
         behaviorTree.Update(this);
-        Debug.Log(currentState.ToString());
     }
 
     public override void TakeDamage(int damage)
@@ -116,7 +115,7 @@ public class SmartEnemy : Enemy {
     {
         public override bool Update(SmartEnemy context)
         {
-            return Vector3.Distance(Services.GameManager.player.transform.position, context.transform.position) < context.rangeToAttackFrom;
+            return Vector3.Distance(Services.MainGame.player.transform.position, context.transform.position) < context.rangeToAttackFrom;
         }
     }
 
@@ -222,7 +221,7 @@ public class SmartEnemy : Enemy {
             if (context.currentState != SmartEnemy.State.Attacking)
             {
                 context.currentState = SmartEnemy.State.Attacking;
-                target = Services.GameManager.player.transform.position;
+                target = Services.MainGame.player.transform.position;
             }
 
             context.transform.position = Vector3.MoveTowards(context.transform.position, target, context.attackSpeed * Time.deltaTime);
@@ -246,7 +245,7 @@ public class SmartEnemy : Enemy {
             {
                 context.currentState = SmartEnemy.State.Fleeing;
                 float angle = UnityEngine.Random.Range(0, 360) * Mathf.Deg2Rad;
-                Vector3 playerLocation = Services.GameManager.player.transform.position;
+                Vector3 playerLocation = Services.MainGame.player.transform.position;
                 Vector3 fleeDirection = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
                 target = playerLocation + (context.fleeDistance * fleeDirection);
                 context.transform.localScale = context.defaultSize;
@@ -275,7 +274,7 @@ public class SmartEnemy : Enemy {
         public override void Update()
         {
             Context.ApproachPlayer();
-            if (Vector2.Distance(Services.GameManager.player.transform.position, Context.transform.position) < Context.rangeToAttackFrom)
+            if (Vector2.Distance(Services.MainGame.player.transform.position, Context.transform.position) < Context.rangeToAttackFrom)
             {
                 TransitionTo<AttackPreparation>();
             }
@@ -340,7 +339,7 @@ public class SmartEnemy : Enemy {
 
         public override void OnEnter()
         {
-            target = Services.GameManager.player.transform.position;
+            target = Services.MainGame.player.transform.position;
             startPos = Context.transform.position;
             calculatedFlightTime = Vector3.Distance(startPos, target) / Context.attackSpeed;
             timeElapsed = 0;
@@ -370,7 +369,7 @@ public class SmartEnemy : Enemy {
         public override void OnEnter()
         {
             float angle = UnityEngine.Random.Range(0, 360) * Mathf.Deg2Rad;
-            Vector3 playerLocation = Services.GameManager.player.transform.position;
+            Vector3 playerLocation = Services.MainGame.player.transform.position;
             Vector3 fleeDirection = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
             fleeTarget = playerLocation + (Context.fleeDistance * fleeDirection);
             startPos = Context.transform.position;

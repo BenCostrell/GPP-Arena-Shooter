@@ -51,7 +51,7 @@ public class EnemyManager : MonoBehaviour {
 			enemiesToSpawn += 1;
 		}
 		if (waveCount % wavesBeforeBoss == 0) {
-			Services.GameManager.ItsBossTime ();
+			Services.MainGame.ItsBossTime ();
 		} else {
 			SpawnNewWave ();
 		}
@@ -66,7 +66,7 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	public void GenerateEnemy(Vector3 location, EnemyType type){
-		GameObject newEnemy = Instantiate (Services.PrefabDB.Enemy, location, Quaternion.identity) as GameObject;
+		GameObject newEnemy = Instantiate (Services.PrefabDB.Enemy, location, Quaternion.identity, Services.MainGame.transform) as GameObject;
         switch (type)
         {
             case EnemyType.Bold:
